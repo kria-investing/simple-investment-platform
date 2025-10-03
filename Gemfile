@@ -37,7 +37,7 @@ gem "thruster", require: false
 
 gem "slim-rails"
 gem "simple_form"
-gem "enumerize", "~> 2.0.1"
+gem "enumerize", "~> 2.8.1"
 gem "sassc-rails"
 
 
