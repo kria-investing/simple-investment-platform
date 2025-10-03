@@ -1,0 +1,25 @@
+h1 = @fundraise.title
+
+p
+  strong Meta:
+  = number_to_currency((@fundraise.target_cents || 0) / 100.0, unit: "R$ ", separator: ",", delimiter: ".")
+
+p
+  strong Status:
+  = @fundraise.status
+
+p
+  strong Descrição:
+  = simple_format(@fundraise.description || "—")
+
+p
+  strong Início:
+  = @fundraise.starts_at ? l(@fundraise.starts_at, format: :long) : "—"
+
+p
+  strong Término:
+  = @fundraise.ends_at ? l(@fundraise.ends_at, format: :long) : "—"
+
+= link_to "Editar", edit_fundraise_path(@fundraise), class: "btn btn-secondary"
+= " "
+= link_to "Voltar", fundraises_path, class: "btn btn-light"

@@ -1,0 +1,20 @@
+h1 Usuários
+= link_to "Novo Usuário", new_user_path, class: "btn btn-primary"
+
+table
+  thead
+    tr
+      th Nome
+      th Email
+      th Ações
+  tbody
+    - @users.each do |user|
+      tr
+        td = user.name
+        td = user.email
+        td
+          = link_to "Mostrar", user
+          | 
+          = link_to "Editar", edit_user_path(user)
+          | 
+          = link_to "Excluir", user, method: :delete, data: { confirm: "Tem certeza?" }

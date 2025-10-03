@@ -1,0 +1,7 @@
+h1 = @user.name
+p
+  strong Email:
+  = @user.email
+
+= link_to "Editar", edit_user_path(@user), class: "btn btn-secondary"
+= link_to "Voltar", users_path, class: "btn btn-light"

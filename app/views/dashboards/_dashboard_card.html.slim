@@ -1,0 +1,11 @@
+.card
+  = link_to path, class: "dashboard-card-link" do
+    .card-body
+      - if local_assigns[:icon]
+        .card-icon
+          == icon
+      .card-content
+        h3.card-title = title
+        p.card-count = count
+        - if local_assigns[:subtitle] && subtitle.present?
+          p.card-subtitle = subtitle

@@ -1,0 +1,30 @@
+h1 Ofertas
+
+= link_to "Nova Oferta", new_fundraise_path, class: "btn btn-primary"
+
+table.table
+  thead
+    tr
+      th Título da oferta
+      th Meta
+      th Status
+      th Início
+      th Término
+      th Ações
+  tbody
+    - @fundraises.each do |fundraise|
+      tr
+        td = link_to fundraise.title, fundraise_path(fundraise)
+        td = number_to_currency((fundraise.target_cents || 0) / 100.0, unit: "R$ ", separator: ",", delimiter: ".")
+        td = fundraise.status
+        td = fundraise.starts_at ? l(fundraise.starts_at, format: :short) : "-"
+        td = fundraise.ends_at ? l(fundraise.ends_at, format: :short) : "-"
+        td
+          = link_to "Mostrar", fundraise_path(fundraise), class: "btn btn-sm btn-link"
+          = " "
+          = link_to "Editar", edit_fundraise_path(fundraise), class: "btn btn-sm btn-link"
+          = " "
+          = link_to "Excluir", fundraise_path(fundraise),
+            method: :delete,
+            data: { confirm: "Tem certeza que deseja excluir esta oferta?" },
+            class: "btn btn-sm btn-danger"

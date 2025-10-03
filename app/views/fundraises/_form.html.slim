@@ -1,0 +1,19 @@
+= simple_form_for(fundraise) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :title, required: true, input_html: { maxlength: 255 }
+    = f.input :description, as: :text, input_html: { rows: 5 }
+
+    = f.input :target_cents,
+      label: "Meta (R$)",
+      hint: "Informe o valor em centavos. Ex.: R$ 1.000,00 = 100000 centavos",
+
+    = f.input :status
+
+    = f.input :starts_at, as: :datetime
+    = f.input :ends_at, as: :datetime
+
+  .form-actions
+    = f.button :submit, class: "btn btn-primary"
+    = link_to "Voltar", fundraises_path, class: "btn btn-default"

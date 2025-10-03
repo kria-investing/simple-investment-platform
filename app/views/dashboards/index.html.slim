@@ -1,0 +1,28 @@
+h1 Dashboard
+
+.row
+  .col
+    = render "dashboard_card",
+      title: "Total de Usuários",
+      count: @total_users,
+      path: users_path,
+      subtitle: "#{@recent_users.count} novos"
+  .col
+    = render "dashboard_card",
+      title: "Total de Ofertas",
+      count: @total_fundraises,
+      path: fundraises_path,
+      subtitle: "#{@recent_fundraises.count} recentes"
+
+
+.row
+  .col
+    h2 Recentes — Usuários
+    ul
+      - @recent_users.each do |u|
+        li = link_to u.name, user_path(u)
+  .col
+    h2 Recentes — Ofertas
+    ul
+      - @recent_fundraises.each do |f|
+        li = link_to f.title, fundraise_path(f)
