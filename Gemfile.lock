@@ -107,7 +107,7 @@ GEM
     dotenv (3.1.8)
     drb (2.2.3)
     ed25519 (1.4.0)
-    enumerize (2.0.1)
+    enumerize (2.8.1)
       activesupport (>= 3.2)
     erb (5.0.2)
     erubi (1.13.1)
@@ -438,7 +438,7 @@ DEPENDENCIES
   brakeman
   capybara
   debug
-  enumerize (~> 2.0.1)
+  enumerize (~> 2.8.1)
   factory_bot_rails
   faker
   importmap-rails
