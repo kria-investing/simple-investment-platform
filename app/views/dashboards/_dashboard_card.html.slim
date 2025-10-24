@@ -1,16 +1,15 @@
-/ Estrutura básica de Card: fundo branco, sombra, borda e padding.
-.p-6.bg-white.shadow-xl.rounded-xl.border.border-gray-100.hover:shadow-2xl.transition-shadow
-  .flex.justify-between.items-center
-    / Título Principal (Métrica)
-    p.text-sm.font-medium.text-gray-500 = title
-    / Link de Ação
-    = link_to "Ver", path, class: "text-indigo-600 hover:text-indigo-800 text-sm font-medium"
-  
-  .mt-1.flex.items-baseline.justify-between
-    / Valor da Métrica (Grande e em destaque)
-    p.text-4xl.font-extrabold.text-gray-900 = count
+/ Estrutura Card do Bootstrap (p-3 shadow-sm rounded)
+.card.shadow-sm.h-100
+  .card-body
+    .d-flex.justify-content-between.align-items-center
+      / Título Principal (Métrica)
+      p.card-subtitle.text-muted.text-uppercase.fw-bold = title
+      / Link de Ação
+      = link_to "Ver", path, class: "btn btn-sm btn-outline-primary"
+    
+    / Valor da Métrica
+    h1.card-title.display-4.fw-bold.text-dark.mt-2 = count
     
     / Subtítulo (Variação ou Detalhe)
-    .ml-2.text-sm.font-semibold.text-green-600
-      / Um badge simples para destacar novos/recentes.
-      span.inline-flex.items-center.px-2.py-0\.5.rounded-full.text-xs.font-medium.bg-green-100.text-green-800 = subtitle
+    / Utiliza Badge para destaque
+    span.badge.bg-success.rounded-pill.mt-1 = subtitle

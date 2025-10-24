@@ -15,7 +15,7 @@ table.table
     - @fundraises.each do |fundraise|
       tr
         td = link_to fundraise.title, fundraise_path(fundraise)
-        td = number_to_currency((fundraise.target_cents || 0) / 100.0, unit: "R$ ", separator: ",", delimiter: ".")
+        td = number_to_currency_br(fundraise.target_cents / 100.0)
         td = fundraise.status
         td = fundraise.starts_at ? l(fundraise.starts_at, format: :short) : "-"
         td = fundraise.ends_at ? l(fundraise.ends_at, format: :short) : "-"

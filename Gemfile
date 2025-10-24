@@ -69,5 +69,3 @@ end
 
 
 gem "dotenv"
-gem "tailwindcss-rails", "~> 3.3.1"
-gem "tailwindcss-ruby", "~> 3.4"
