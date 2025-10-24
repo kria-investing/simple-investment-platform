@@ -1,28 +1,30 @@
-h1 Dashboard
+h1.text-3xl.font-bold.text-gray-900.mb-6.page-header Dashboard
 
-.row
-  .col
-    = render "dashboard_card",
-      title: "Total de Usuários",
-      count: @total_users,
-      path: users_path,
-      subtitle: "#{@recent_users.count} novos"
-  .col
-    = render "dashboard_card",
-      title: "Total de Ofertas",
-      count: @total_fundraises,
-      path: fundraises_path,
-      subtitle: "#{@recent_fundraises.count} recentes"
+/ GRID DE CARDS (Métricas)
+/ Utilizamos um grid responsivo: 1 coluna no mobile (sm), 2 colunas em telas médias (md) e maiores.
+.grid.grid-cols-1.md:grid-cols-2.gap-6.mb-8.dashboard-metrics
+  / Renderização dos Cards de Métricas
+  = render "dashboard_card",
+    title: "Total de Usuários",
+    count: @total_users,
+    path: users_path,
+    subtitle: "#{@recent_users.count} novos"
+  = render "dashboard_card",
+    title: "Total de Ofertas",
+    count: @total_fundraises,
+    path: fundraises_path,
+    subtitle: "#{@recent_fundraises.count} recentes"
 
-
-.row
-  .col
-    h2 Recentes — Usuários
-    ul
-      - @recent_users.each do |u|
-        li = link_to u.name, user_path(u)
-  .col
-    h2 Recentes — Ofertas
-    ul
-      - @recent_fundraises.each do |f|
-        li = link_to f.title, fundraise_path(f)
+/ GRID DE LISTAS (Atividade Recente)
+/ Mesmo grid para alinhamento horizontal
+.grid.grid-cols-1.md:grid-cols-2.gap-6.dashboard-recent-activity
+  / Usuários Recentes
+  div.p-6.bg-white.shadow-lg.rounded-xl.border.border-gray-100
+    h2.text-xl.font-semibold.text-gray-800.mb-4 Recentes — Usuários
+    / Passando a coleção via locals: para manter o Clean Code
+    = render "recent_users_list", users: @recent_users
+  
+  / Ofertas Recentes
+  div.p-6.bg-white.shadow-lg.rounded-xl.border.border-gray-100
+    h2.text-xl.font-semibold.text-gray-800.mb-4 Recentes — Ofertas
+    = render "recent_fundraises_list", fundraises: @recent_fundraises

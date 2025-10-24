@@ -1,0 +1,5 @@
+ul.recent-list
+  / A variável local é `fundraises`
+  - fundraises.each do |fundraise|
+    li
+      = link_to fundraise.title, fundraise_path(fundraise), class: "recent-item-link"

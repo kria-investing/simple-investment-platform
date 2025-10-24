@@ -1,0 +1,29 @@
+/ Top Navigation Bar
+nav.bg-sky-300.shadow-sm.border-b.border-gray-200
+  .max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8
+    .flex.justify-between.h-16
+      
+      / Lado Esquerdo: Logotipo/Nome do Sistema e Links Principais
+      .flex
+        / Logotipo/Nome do Sistema
+        .flex-shrink-0.flex.items-center
+          / Substitua "Home Path" pelo seu root_path ou similar
+          = link_to root_path, class: "text-2xl.font-bold.text-indigo-600.tracking-wider"
+            | Investimento Simples
+        
+        / Links de Navegação (Visíveis apenas em telas médias e maiores)
+        .hidden.sm:ml-6.sm:flex.sm:space-x-8
+          / Link Ativo (Exemplo: Dashboard)
+          = link_to "Dashboard", root_path, class: "border-indigo-500.text-gray-900.inline-flex.items-center.px-1.pt-1.border-b-2.text-sm.font-medium"
+          
+          / Links Inativos (Exemplos)
+          = link_to "Ofertas", fundraises_path, class: "border-transparent.text-gray-500.hover:border-gray-300.hover:text-gray-700.inline-flex.items-center.px-1.pt-1.border-b-2.text-sm.font-medium"
+          = link_to "Financeiro", fundraises_path, class: "border-transparent.text-gray-500.hover:border-gray-300.hover:text-gray-700.inline-flex.items-center.px-1.pt-1.border-b-2.text-sm.font-medium"
+
+/ Menu Mobile (Oculto por padrão, exigiria JS/Alpine/Stimulus para toggle)
+.sm:hidden id="mobile-menu"
+  .pt-2.pb-3.space-y-1
+    / Links Mobile
+    = link_to "Dashboard", root_path, class: "bg-indigo-50.border-indigo-500.text-indigo-700.block.pl-3.pr-4.py-2.border-l-4.text-base.font-medium"
+    = link_to "Ofertas", fundraises_path, class: "border-transparent.text-gray-600.hover:bg-gray-50.hover:border-gray-300.hover:text-gray-800.block.pl-3.pr-4.py-2.border-l-4.text-base.font-medium"
+    / ... outros links

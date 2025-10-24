@@ -1,0 +1,20 @@
+/ Lista sem marcadores, com divisores
+ul.divide-y.divide-gray-200.recent-list
+  - users.each do |user|
+    / li com padding e hover para indicar interatividade
+    li.py-3.sm:py-4.hover:bg-gray-50.transition-colors.recent-item
+      = link_to user_path(user), class: "flex items-center space-x-4 group"
+        / Pode ser substituído por um Avatar se houver, mas por enquanto um espaço.
+        .flex-shrink-0.w-8.h-8.bg-indigo-100.rounded-full.flex.items-center.justify-center
+          / Exemplo de ícone, que deve ser inserido se você usa um pacote de ícones (Heroicons, Font Awesome, etc.)
+          / span.text-indigo-600.text-lg U
+        
+        / Nome do usuário
+        .flex-1.min-w-0
+          p.text-sm.font-medium.text-gray-900.truncate
+            = user.name
+        
+        / Seta indicativa de link
+        .inline-flex.items-center.text-base.font-semibold.text-gray-400.group-hover:text-indigo-600
+          / Exemplo de Seta (pode ser um SVG)
+          | &rarr;

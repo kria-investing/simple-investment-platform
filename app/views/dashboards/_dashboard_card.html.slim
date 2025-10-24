@@ -1,11 +1,16 @@
-.card
-  = link_to path, class: "dashboard-card-link" do
-    .card-body
-      - if local_assigns[:icon]
-        .card-icon
-          == icon
-      .card-content
-        h3.card-title = title
-        p.card-count = count
-        - if local_assigns[:subtitle] && subtitle.present?
-          p.card-subtitle = subtitle
+/ Estrutura básica de Card: fundo branco, sombra, borda e padding.
+.p-6.bg-white.shadow-xl.rounded-xl.border.border-gray-100.hover:shadow-2xl.transition-shadow
+  .flex.justify-between.items-center
+    / Título Principal (Métrica)
+    p.text-sm.font-medium.text-gray-500 = title
+    / Link de Ação
+    = link_to "Ver", path, class: "text-indigo-600 hover:text-indigo-800 text-sm font-medium"
+  
+  .mt-1.flex.items-baseline.justify-between
+    / Valor da Métrica (Grande e em destaque)
+    p.text-4xl.font-extrabold.text-gray-900 = count
+    
+    / Subtítulo (Variação ou Detalhe)
+    .ml-2.text-sm.font-semibold.text-green-600
+      / Um badge simples para destacar novos/recentes.
+      span.inline-flex.items-center.px-2.py-0\.5.rounded-full.text-xs.font-medium.bg-green-100.text-green-800 = subtitle
