@@ -3,7 +3,9 @@ class FundraisesController < ApplicationController
   before_action :set_fundraise, only: %i[show edit update destroy]
 
   def index
-    @fundraises = Fundraise.order(created_at: :desc)
+    @q = Fundraise.ransack(params[:q])
+    @fundraises = @q.result(distinct: true)
+                    .order(created_at: :desc)
   end
 
   def show; end
@@ -17,7 +19,7 @@ class FundraisesController < ApplicationController
   def create
     @fundraise = Fundraise.new(fundraise_params)
     if @fundraise.save
-      redirect_to @fundraise, notice: "Oferta criada com sucesso."
+      redirect_to @fundraise, notice: 'Oferta criada com sucesso.'
     else
       render :new, status: :unprocessable_entity
     end
@@ -25,7 +27,7 @@ class FundraisesController < ApplicationController
 
   def update
     if @fundraise.update(fundraise_params)
-      redirect_to @fundraise, notice: "Oferta atualizada com sucesso."
+      redirect_to @fundraise, notice: 'Oferta atualizada com sucesso.'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -33,7 +35,7 @@ class FundraisesController < ApplicationController
 
   def destroy
     if @fundraise.destroy
-      redirect_to fundraises_url, notice: "Oferta removida com sucesso."
+      redirect_to fundraises_url, notice: 'Oferta removida com sucesso.'
     else
       redirect_to @fundraise, alert: @fundraise.errors.full_messages.to_sentence
     end

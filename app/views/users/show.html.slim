@@ -1,7 +1,52 @@
-h1 = @user.name
-p
-  strong Email:
-  = @user.email
+div.space-y-6
+  div.flex.justify-between.items-center
+    h1.text-3xl.font-bold.text-gray-900 = @user.name
+    div.space-x-2
+      = link_to "Editar", edit_user_path(@user), class: "bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+      = link_to "Voltar", users_path, class: "bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors"
 
-= link_to "Editar", edit_user_path(@user), class: "btn btn-secondary"
-= link_to "Voltar", users_path, class: "btn btn-light"
+  div.bg-white.rounded-lg.shadow-md.p-6
+    dl.grid.grid-cols-1.md:grid-cols-2.gap-4
+      div
+        dt.text-sm.font-medium.text-gray-500 Email
+        dd.mt-1.text-sm.text-gray-900 = @user.email
+      div
+        dt.text-sm.font-medium.text-gray-500 Cadastrado em
+        dd.mt-1.text-sm.text-gray-900 = l(@user.created_at, format: :long)
+
+  div.bg-white.rounded-lg.shadow-md.p-6
+    h2.text-xl.font-bold.text-gray-900.mb-4 💰 Investimentos
+
+    div.grid.grid-cols-1.md:grid-cols-2.gap-4.mb-6
+      div.bg-gradient-to-br.from-green-50.to-green-100.rounded-lg.p-4.border.border-green-200
+        p.text-sm.font-medium.text-green-600 Total Investido
+        p.text-2xl.font-bold.text-green-700.mt-1
+          = number_to_currency(@user.total_invested, unit: "R$ ", separator: ",", delimiter: ".")
+
+      div.bg-gradient-to-br.from-indigo-50.to-indigo-100.rounded-lg.p-4.border.border-indigo-200
+        p.text-sm.font-medium.text-indigo-600 Quantidade de Investimentos
+        p.text-2xl.font-bold.text-indigo-700.mt-1
+          = @user.investments.count
+
+    - if @investments.any?
+      div.overflow-hidden.border.border-gray-200.rounded-lg
+        table.min-w-full.divide-y.divide-gray-200
+          thead.bg-gray-50
+            tr
+              th.px-4.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase Oferta
+              th.px-4.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase Valor
+              th.px-4.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase Data
+              th.px-4.py-3.text-right.text-xs.font-medium.text-gray-500.uppercase Ações
+          tbody.bg-white.divide-y.divide-gray-200
+            - @investments.each do |investment|
+              tr.hover:bg-gray-50
+                td.px-4.py-3.text-sm
+                  = link_to investment.fundraise.title, fundraise_path(investment.fundraise), class: "text-indigo-600 hover:text-indigo-900"
+                td.px-4.py-3.text-sm.font-medium.text-green-600
+                  = number_to_currency(investment.amount, unit: "R$ ", separator: ",", delimiter: ".")
+                td.px-4.py-3.text-sm.text-gray-500
+                  = l(investment.created_at, format: :short)
+                td.px-4.py-3.text-sm.text-right
+                  = link_to "Ver detalhes", investment_path(investment), class: "text-indigo-600 hover:text-indigo-900"
+    - else
+      p.text-gray-500.text-center.py-8 Nenhum investimento realizado ainda

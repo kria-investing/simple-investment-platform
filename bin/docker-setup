@@ -1,0 +1,28 @@
+#!/bin/bash
+set -e
+
+echo "Parando containers existentes..."
+docker compose down -v
+
+echo "Fazendo build das imagens..."
+docker compose build --no-cache
+
+echo "Aguardando banco de dados iniciar..."
+docker compose up -d db
+sleep 10
+
+echo "Instalando gems no container..."
+docker compose run --rm web bundle install
+
+echo "Compilando Tailwind CSS..."
+docker compose run --rm web bin/rails tailwindcss:build
+
+echo "Criando e migrando banco de dados..."
+docker compose run --rm web bin/rails db:create db:migrate db:seed
+
+echo "Setup completo!"
+echo ""
+echo "Para iniciar a aplicação, rode:"
+echo "  docker compose up"
+echo ""
+echo "Acesse: http://localhost:3000"

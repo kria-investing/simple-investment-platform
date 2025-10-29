@@ -1,25 +1,65 @@
-h1 = @fundraise.title
+div.space-y-6
+  div.flex.justify-between.items-center
+    h1.text-3xl.font-bold.text-gray-900 Detalhes da Oferta
+    div.flex.gap-2
+      = link_to edit_fundraise_path(@fundraise), class: "bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2"
+        svg.w-5.h-5 fill="currentColor" viewBox="0 0 20 20"
+          path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+        span Editar
+      = link_to fundraises_path, class: "bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2"
+        svg.w-5.h-5 fill="currentColor" viewBox="0 0 20 20"
+          path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"
+        span Voltar
 
-p
-  strong Meta:
-  = number_to_currency((@fundraise.target_cents || 0) / 100.0, unit: "R$ ", separator: ",", delimiter: ".")
+  div.bg-white.rounded-lg.shadow-md.overflow-hidden
+    div.px-6.py-4.bg-gradient-to-r.from-purple-500.to-purple-600
+      p.text-white.text-sm.font-medium = @fundraise.title
+      p.text-white.text-4xl.font-bold.mt-1
+        = number_to_currency((@fundraise.target_cents || 0) / 100.0, unit: "R$ ", separator: ",", delimiter: ".")
 
-p
-  strong Status:
-  = @fundraise.status
+    div.p-6
+      dl.grid.grid-cols-1.md:grid-cols-2.gap-6
+        div
+          dt.flex.items-center.gap-2.text-sm.font-medium.text-gray-500
+            svg.w-5.h-5.text-purple-500 fill="currentColor" viewBox="0 0 20 20"
+              path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"
+            span Status
+          dd.mt-2.text-lg
+            - if @fundraise.open?
+              span.px-3.py-1.text-sm.font-semibold.rounded-full.bg-green-100.text-green-800 Aberta
+            - else
+              span.px-3.py-1.text-sm.font-semibold.rounded-full.bg-gray-100.text-gray-800 Fechada
 
-p
-  strong Descrição:
-  = simple_format(@fundraise.description || "—")
+        div
+          dt.flex.items-center.gap-2.text-sm.font-medium.text-gray-500
+            svg.w-5.h-5.text-green-500 fill="currentColor" viewBox="0 0 20 20"
+              path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"
+              path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"
+            span Total Arrecadado
+          dd.mt-2.text-lg.font-semibold.text-gray-900
+            = number_to_currency(@fundraise.total_raised, unit: "R$ ", separator: ",", delimiter: ".")
 
-p
-  strong Início:
-  = @fundraise.starts_at ? l(@fundraise.starts_at, format: :long) : "—"
+        div
+          dt.flex.items-center.gap-2.text-sm.font-medium.text-gray-500
+            svg.w-5.h-5.text-blue-500 fill="currentColor" viewBox="0 0 20 20"
+              path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"
+            span Data de Início
+          dd.mt-2.text-sm.text-gray-900
+            = @fundraise.starts_at ? l(@fundraise.starts_at, format: :long) : "—"
 
-p
-  strong Término:
-  = @fundraise.ends_at ? l(@fundraise.ends_at, format: :long) : "—"
+        div
+          dt.flex.items-center.gap-2.text-sm.font-medium.text-gray-500
+            svg.w-5.h-5.text-red-500 fill="currentColor" viewBox="0 0 20 20"
+              path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"
+            span Data de Término
+          dd.mt-2.text-sm.text-gray-900
+            = @fundraise.ends_at ? l(@fundraise.ends_at, format: :long) : "—"
 
-= link_to "Editar", edit_fundraise_path(@fundraise), class: "btn btn-secondary"
-= " "
-= link_to "Voltar", fundraises_path, class: "btn btn-light"
+      - if @fundraise.description.present?
+        div.mt-6.pt-6.border-t.border-gray-200
+          dt.flex.items-center.gap-2.text-sm.font-medium.text-gray-500.mb-2
+            svg.w-5.h-5.text-gray-500 fill="currentColor" viewBox="0 0 20 20"
+              path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"
+            span Descrição
+          dd.text-sm.text-gray-700.prose.max-w-none
+            = simple_format(@fundraise.description)

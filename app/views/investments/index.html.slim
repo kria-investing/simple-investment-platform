@@ -1,0 +1,54 @@
+div.space-y-6
+  div.flex.justify-between.items-center
+    h1.text-3xl.font-bold.text-gray-900 Investimentos
+    = link_to new_investment_path, class: "bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2"
+      svg.w-5.h-5 fill="currentColor" viewBox="0 0 20 20"
+        path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"
+      span Novo Investimento
+
+  = search_form_for @q, url: investments_path, method: :get, html: { class: "flex items-center gap-3 bg-white p-4 rounded-lg shadow-sm" } do |f|
+    div.flex.items-center.gap-2.w-full
+      = f.label :user_name_or_fundraise_title_cont, "Buscar investimento", class: "sr-only"
+      = f.search_field :user_name_or_fundraise_title_cont,
+        placeholder: "Usuário ou oferta...",
+        class: "w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm text-sm px-3 py-2"
+    div.flex.items-center.gap-2
+      = f.submit "Buscar", class: "bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+      = link_to "Limpar", investments_path, class: "text-gray-600 hover:text-gray-900 text-sm"
+
+  div.bg-white.rounded-lg.shadow-md.overflow-hidden
+    table.min-w-full.divide-y.divide-gray-200
+      thead.bg-gray-50
+        tr
+          th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider
+            = sort_link(@q, :user_name, "Usuário")
+          th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider
+            = sort_link(@q, :fundraise_title, "Oferta")
+          th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider
+            = sort_link(@q, :amount_cents, "Valor")
+          th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider
+            = sort_link(@q, :created_at, "Data")
+          th.px-6.py-3.text-right.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Ações
+      tbody.bg-white.divide-y.divide-gray-200
+        - @investments.each do |investment|
+          tr.hover:bg-gray-50.transition-colors
+            td.px-6.py-4.whitespace-nowrap
+              = link_to investment.user.name, user_path(investment.user), class: "text-indigo-600 hover:text-indigo-900 font-medium"
+            td.px-6.py-4.whitespace-nowrap
+              = link_to investment.fundraise.title, fundraise_path(investment.fundraise), class: "text-purple-600 hover:text-purple-900 font-medium"
+            td.px-6.py-4.whitespace-nowrap.text-sm.font-semibold.text-green-600
+              = number_to_currency((investment.amount_cents || 0) / 100.0, unit: "R$ ", separator: ",", delimiter: ".")
+            td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500
+              = l(investment.created_at, format: :short)
+            td.px-6.py-4.whitespace-nowrap.text-right.text-sm.font-medium
+              div.flex.justify-end.gap-2
+                = link_to investment_path(investment), class: "text-indigo-600 hover:text-indigo-900", title: "Ver"
+                  svg.w-5.h-5 fill="currentColor" viewBox="0 0 20 20"
+                    path d="M10 12a2 2 0 100-4 2 2 0 000 4z"
+                    path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"
+                = link_to edit_investment_path(investment), class: "text-gray-600 hover:text-gray-900", title: "Editar"
+                  svg.w-5.h-5 fill="currentColor" viewBox="0 0 20 20"
+                    path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+                = link_to investment_path(investment), method: :delete, data: { confirm: "Tem certeza?" }, class: "text-red-600 hover:text-red-900", title: "Excluir"
+                  svg.w-5.h-5 fill="currentColor" viewBox="0 0 20 20"
+                    path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"

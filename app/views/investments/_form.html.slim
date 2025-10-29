@@ -1,0 +1,47 @@
+div.bg-white.rounded-lg.shadow-md.p-6
+  = simple_form_for investment, html: { class: "space-y-6" } do |f|
+    - if investment.errors.any?
+      div.bg-red-50.border.border-red-200.rounded-lg.p-4.mb-6
+        h3.text-red-800.font-medium.mb-2
+          = pluralize(investment.errors.count, "erro impediu", "erros impediram")
+          |  que este investimento fosse salvo:
+        ul.list-disc.list-inside.text-red-700.text-sm
+          - investment.errors.full_messages.each do |message|
+            li = message
+
+    div.space-y-4
+      div
+        = f.label :user_id, class: "block text-sm font-medium text-gray-700 mb-1"
+          svg.inline.w-4.h-4.mr-1 fill="currentColor" viewBox="0 0 20 20"
+            path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"
+          span Usuário
+        = f.collection_select :user_id, @users, :id, :name, { include_blank: "Selecione um usuário" }, { class: "mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 px-4 py-2.5 text-gray-900" }
+
+      div
+        = f.label :fundraise_id, class: "block text-sm font-medium text-gray-700 mb-1"
+          svg.inline.w-4.h-4.mr-1 fill="currentColor" viewBox="0 0 20 20"
+            path d="M3 12v3c0 1.657 3.134 3 7 3s7-1.343 7-3v-3c0 1.657-3.134 3-7 3s-7-1.343-7-3z"
+            path d="M3 7v3c0 1.657 3.134 3 7 3s7-1.343 7-3V7c0 1.657-3.134 3-7 3S3 8.657 3 7z"
+            path d="M17 5c0 1.657-3.134 3-7 3S3 6.657 3 5s3.134-3 7-3 7 1.343 7 3z"
+          span Oferta
+        = f.collection_select :fundraise_id, @fundraises, :id, :title, { include_blank: "Selecione uma oferta" }, { class: "mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 px-4 py-2.5 text-gray-900" }
+
+      div
+        = f.label :amount_cents, class: "block text-sm font-medium text-gray-700 mb-1"
+          svg.inline.w-4.h-4.mr-1 fill="currentColor" viewBox="0 0 20 20"
+            path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"
+            path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"
+          span Valor (em centavos)
+        = f.input_field :amount_cents, class: "mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 px-4 py-2.5 text-gray-900", placeholder: "Ex: 100000 (R$ 1.000,00)"
+        p.mt-1.text-xs.text-gray-500 💡 Dica: R$ 1.000,00 = 100000 centavos
+
+    div.flex.gap-3.pt-4
+      = f.button :submit, class: "flex-1 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+        svg.w-5.h-5 fill="currentColor" viewBox="0 0 20 20"
+          path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"
+        span = f.object.persisted? ? "Atualizar Investimento" : "Criar Investimento"
+
+      = link_to investments_path, class: "bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-2.5 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+        svg.w-5.h-5 fill="currentColor" viewBox="0 0 20 20"
+          path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"
+        span Cancelar

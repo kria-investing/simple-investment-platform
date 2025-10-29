@@ -3,10 +3,12 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
 
   def index
-    @users = User.order(created_at: :desc)
+    @q = User.ransack(params[:q])
+    @users = @q.result(distinct: true).order(created_at: :desc)
   end
 
   def show
+    @investments = @user.investments.includes(:fundraise).order(created_at: :desc)
   end
 
   def new
@@ -18,7 +20,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to @user, notice: "Usuário criado com sucesso."
+      redirect_to @user, notice: 'Usuário criado com sucesso.'
     else
       render :new, status: :unprocessable_entity
     end
@@ -26,7 +28,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to @user, notice: "Usuário atualizado com sucesso."
+      redirect_to @user, notice: 'Usuário atualizado com sucesso.'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -34,7 +36,7 @@ class UsersController < ApplicationController
 
   def destroy
     if @user.destroy
-      redirect_to users_url, notice: "Usuário removido com sucesso."
+      redirect_to users_url, notice: 'Usuário removido com sucesso.'
     else
       redirect_to @user, alert: @user.errors.full_messages.to_sentence
     end

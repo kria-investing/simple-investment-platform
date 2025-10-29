@@ -1,0 +1,81 @@
+services:
+  db:
+    image: postgres:16
+    container_name: simple_investment_platform_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: simple_investment_platform_development
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: simple_investment_platform_redis
+    ports:
+      - "6378:6379" # Host:6378 -> Container:6379
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: simple_investment_platform_web
+    command: bash -c "bundle check || bundle install && rm -f tmp/pids/server.pid && bin/rails tailwindcss:build && bin/rails server -b 0.0.0.0"
+    volumes:
+      - .:/rails
+      - bundle_cache:/usr/local/bundle
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      DATABASE_HOST: db
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: postgres
+      DATABASE_NAME: simple_investment_platform_development
+      REDIS_URL: redis://redis:6379/0
+    stdin_open: true
+    tty: true
+
+  sidekiq:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: simple_investment_platform_sidekiq
+    command: bash -c "bundle check || bundle install && bundle exec sidekiq -q close_expired_fundraises_job -q default"
+    volumes:
+      - .:/rails
+      - bundle_cache:/usr/local/bundle
+      - ./config/sidekiq.yml:/rails/config/sidekiq.yml:ro
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      DATABASE_HOST: db
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: postgres
+      DATABASE_NAME: simple_investment_platform_development
+      REDIS_URL: redis://redis:6379/0
+    stdin_open: true
+    tty: true
+
+volumes:
+  postgres_data:
+  bundle_cache:

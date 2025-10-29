@@ -1,0 +1,6 @@
+:concurrency: 5
+:schedule:
+  close_expired_fundraises_job:
+    cron: '* * * * *'
+    class: 'CloseExpiredFundraisesJob'
+    queue: close_expired_fundraises_job

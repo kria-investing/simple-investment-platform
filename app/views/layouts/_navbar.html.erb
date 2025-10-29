@@ -1,0 +1,18 @@
+<nav class="bg-white shadow-lg">
+  <div class="container mx-auto px-4 max-w-7xl">
+    <div class="flex justify-between items-center py-4">
+      <div class="flex items-center space-x-8">
+        <%= link_to root_path, class: "text-2xl font-bold text-indigo-600 hover:text-indigo-700" do %>
+          💰 Investment Platform
+        <% end %>
+
+        <div class="hidden md:flex space-x-4">
+          <%= link_to "Dashboard", root_path, class: "text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium #{request.path == root_path ? 'bg-indigo-50 text-indigo-600' : ''}" %>
+          <%= link_to "Usuários", users_path, class: "text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium #{request.path.start_with?('/users') ? 'bg-indigo-50 text-indigo-600' : ''}" %>
+          <%= link_to "Ofertas", fundraises_path, class: "text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium #{request.path.start_with?('/fundraises') ? 'bg-indigo-50 text-indigo-600' : ''}" %>
+          <%= link_to "Investimentos", investments_path, class: "text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium #{request.path.start_with?('/investments') ? 'bg-indigo-50 text-indigo-600' : ''}" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

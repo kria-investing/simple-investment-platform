@@ -38,8 +38,14 @@ gem "thruster", require: false
 gem "slim-rails"
 gem "simple_form"
 gem "enumerize", "~> 2.0.1"
-gem "sassc-rails"
-
+gem "tailwindcss-rails"
+gem "chartkick"
+gem "groupdate"
+gem "flatpickr"
+gem 'sidekiq'
+gem 'sidekiq-scheduler'
+gem 'redis'
+gem 'ransack'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

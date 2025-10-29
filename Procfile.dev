@@ -1,0 +1,3 @@
+web: bin/rails server
+css: bin/rails tailwindcss:watch
+worker: bundle exec sidekiq -q close_expired_fundraises_job -q default

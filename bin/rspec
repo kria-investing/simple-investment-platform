@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Script helper para rodar testes com o ambiente correto
+
+export RAILS_ENV=test
+bundle exec rspec "$@"

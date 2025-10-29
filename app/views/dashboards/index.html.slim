@@ -1,28 +1,115 @@
-h1 Dashboard
+div.space-y-8
+  / Header
+  div.flex.justify-between.items-center
+    h1.text-3xl.font-bold.text-gray-900 Dashboard
+    div.text-sm.text-gray-500 Bem-vindo à plataforma de investimentos
 
-.row
-  .col
-    = render "dashboard_card",
-      title: "Total de Usuários",
-      count: @total_users,
-      path: users_path,
-      subtitle: "#{@recent_users.count} novos"
-  .col
-    = render "dashboard_card",
-      title: "Total de Ofertas",
-      count: @total_fundraises,
-      path: fundraises_path,
-      subtitle: "#{@recent_fundraises.count} recentes"
+  / Cards de Estatísticas
+  div.grid.grid-cols-1.md:grid-cols-2.lg:grid-cols-4.gap-6
+    / Card Usuários
+    = link_to users_path, class: "group"
+      div.bg-white.rounded-lg.shadow-md.p-6.hover:shadow-lg.transition-shadow.duration-200
+        div.flex.items-center.justify-between
+          div
+            p.text-sm.font-medium.text-gray-600 Total de Usuários
+            p.text-3xl.font-bold.text-indigo-600.mt-2 = @total_users
+          div.p-3.bg-indigo-100.rounded-full
+            svg.w-8.h-8.text-indigo-600 fill="currentColor" viewBox="0 0 20 20"
+              path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"
 
+    / Card Ofertas
+    = link_to fundraises_path, class: "group"
+      div.bg-white.rounded-lg.shadow-md.p-6.hover:shadow-lg.transition-shadow.duration-200
+        div.flex.items-center.justify-between
+          div
+            p.text-sm.font-medium.text-gray-600 Total de Ofertas
+            p.text-3xl.font-bold.text-purple-600.mt-2 = @total_fundraises
+          div.p-3.bg-purple-100.rounded-full
+            svg.w-8.h-8.text-purple-600 fill="currentColor" viewBox="0 0 20 20"
+              path d="M3 12v3c0 1.657 3.134 3 7 3s7-1.343 7-3v-3c0 1.657-3.134 3-7 3s-7-1.343-7-3z"
+              path d="M3 7v3c0 1.657 3.134 3 7 3s7-1.343 7-3V7c0 1.657-3.134 3-7 3S3 8.657 3 7z"
+              path d="M17 5c0 1.657-3.134 3-7 3S3 6.657 3 5s3.134-3 7-3 7 1.343 7 3z"
 
-.row
-  .col
-    h2 Recentes — Usuários
-    ul
-      - @recent_users.each do |u|
-        li = link_to u.name, user_path(u)
-  .col
-    h2 Recentes — Ofertas
-    ul
-      - @recent_fundraises.each do |f|
-        li = link_to f.title, fundraise_path(f)
+    / Card Investimentos
+    = link_to investments_path, class: "group"
+      div.bg-white.rounded-lg.shadow-md.p-6.hover:shadow-lg.transition-shadow.duration-200
+        div.flex.items-center.justify-between
+          div
+            p.text-sm.font-medium.text-gray-600 Total de Investimentos
+            p.text-3xl.font-bold.text-green-600.mt-2 = @total_investments
+          div.p-3.bg-green-100.rounded-full
+            svg.w-8.h-8.text-green-600 fill="currentColor" viewBox="0 0 20 20"
+              path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"
+
+    / Card Total Investido
+    div.bg-gradient-to-br.from-indigo-500.to-purple-600.rounded-lg.shadow-md.p-6.text-white
+      div.flex.items-center.justify-between
+        div
+          p.text-sm.font-medium.text-indigo-100 Total Investido
+          p.text-3xl.font-bold.mt-2 = number_to_currency(@total_invested, unit: "R$ ", separator: ",", delimiter: ".")
+        div.p-3.bg-white.bg-white.rounded-full
+          svg.w-8.h-8.text-indigo-500 fill="currentColor" viewBox="0 0 20 20"
+            path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"
+            path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"
+
+  / Gráfico de Investimentos por Usuário
+  div.bg-white.rounded-lg.shadow-md.p-6
+    h2.text-xl.font-bold.text-gray-900.mb-4 📊 Investimentos por Usuário
+    - if @investments_by_user.any?
+      = column_chart @investments_by_user, prefix: "R$ ", thousands: ".", decimal: ",", library: { backgroundColor: "white", borderColor: "#e5e7eb", plugins: { legend: { display: false } } }
+    - else
+      p.text-gray-500.text-center.py-8 Nenhum investimento registrado ainda
+
+  / Seção de Recentes
+  div.grid.grid-cols-1.lg:grid-cols-3.gap-6
+    / Usuários Recentes
+    div.bg-white.rounded-lg.shadow-md.p-6
+      div.flex.justify-between.items-center.mb-4
+        h2.text-lg.font-bold.text-gray-900 👥 Usuários Recentes
+        = link_to "Ver todos", users_path, class: "text-sm text-indigo-600 hover:text-indigo-700"
+      - if @recent_users.any?
+        ul.space-y-3
+          - @recent_users.each do |user|
+            li
+              = link_to user, class: "block p-3 rounded-lg hover:bg-gray-50 transition-colors"
+                p.font-medium.text-gray-900 = user.name
+                p.text-sm.text-gray-500 = user.email
+      - else
+        p.text-gray-500.text-sm Nenhum usuário cadastrado
+
+    / Ofertas Recentes
+    div.bg-white.rounded-lg.shadow-md.p-6
+      div.flex.justify-between.items-center.mb-4
+        h2.text-lg.font-bold.text-gray-900 💼 Ofertas Recentes
+        = link_to "Ver todas", fundraises_path, class: "text-sm text-indigo-600 hover:text-indigo-700"
+      - if @recent_fundraises.any?
+        ul.space-y-3
+          - @recent_fundraises.each do |fundraise|
+            li
+              = link_to fundraise, class: "block p-3 rounded-lg hover:bg-gray-50 transition-colors"
+                p.font-medium.text-gray-900 = fundraise.title
+                div.flex.justify-between.items-center.mt-1
+                  span.text-sm.text-gray-500 = number_to_currency(fundraise.target, unit: "R$ ", separator: ",", delimiter: ".")
+                  span class="text-xs px-2 py-1 rounded #{fundraise.open? ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}"
+                    = fundraise.status.text
+      - else
+        p.text-gray-500.text-sm Nenhuma oferta cadastrada
+
+    / Investimentos Recentes
+    div.bg-white.rounded-lg.shadow-md.p-6
+      div.flex.justify-between.items-center.mb-4
+        h2.text-lg.font-bold.text-gray-900 💰 Investimentos Recentes
+        = link_to "Ver todos", investments_path, class: "text-sm text-indigo-600 hover:text-indigo-700"
+      - if @recent_investments.any?
+        ul.space-y-3
+          - @recent_investments.each do |investment|
+            li
+              = link_to investment, class: "block p-3 rounded-lg hover:bg-gray-50 transition-colors"
+                p.font-medium.text-gray-900
+                  = investment.user.name
+                  span.text-gray-500  →
+                  = investment.fundraise.title
+                p.text-sm.text-green-600.font-medium.mt-1
+                  = number_to_currency(investment.amount, unit: "R$ ", separator: ",", delimiter: ".")
+      - else
+        p.text-gray-500.text-sm Nenhum investimento registrado
